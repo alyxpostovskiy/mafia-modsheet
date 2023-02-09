@@ -1,4 +1,4 @@
-PWD /home/al/Documents/mafia
+PWD /home/al/Documents/mafia/modsheet
 INPUT /usr/share/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
 INPUT modsheet.tex
