@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.12.18)  9 FEB 2023 17:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.12.18)  14 FEB 2023 16:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -108,6 +108,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <14.4> on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 13.
+
+Overfull \hbox (0.40619pt too wide) in paragraph at lines 53--76
+ [] 
+ []
+
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./modsheet.aux) ) 
@@ -120,7 +125,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  55i,8n,62p,153b,125s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on modsheet.pdf (1 page, 27809 bytes).
+Output written on modsheet.pdf (1 page, 27820 bytes).
 PDF statistics:
  18 PDF objects out of 1000 (max. 8388607)
  10 compressed objects within 1 object stream
