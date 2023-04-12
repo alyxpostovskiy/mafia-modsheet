@@ -1,58 +1,90 @@
-import numpy as np
-import fileinput
+import random
 import subprocess
 import os
 
-draw_n = 4
 tex_file = "modsheet.tex"
 output_file = "output" #will be pdf, make sure no other files with this name exist
-sheets_to_generate = 5
 latex_exec = "pdflatex"
 
-def seq_line():
-    ret = "Sequence: "
-    for n in np.random.permutation(range(1,17)):
-        ret += f'& {n} '
-    ret += '\\\\ \n'
-    return ret
+sheets_to_generate = 2
+players = 16
+actions = 8
+draw_lines = 4
 
 
-draw_head = "Draws: "
+def players_line(i):
+    return f'{i}' + r" & & & & & & " + f'{i}' + r""". & \\
+    \cline{2-4} \cline{8-8}
+    """
 
-def draw_line(nums):
-    ret = ""
-    for n in nums:
-        ret += f'& {n} '
-    ret += '\\\\ \n'
-    return ret
+def actions_line():
+    return r"""
+    & & & & & & \\[1.9ex]
+    \hline"""
 
-latex = [[], [], []]
-i = 0
-with open(tex_file, "r") as f:
-    for line in f:
-        latex[i].append(line)
-        if "%77" in line:
-            i+=1
+def seq_line(n):
+    seq = list(range(1,n+1))
+    random.shuffle(seq)
+    return "".join([f'& {i} ' for i in seq]) + "\\\\ \n"
+
+def draw_line(n):
+    return "".join([f'& {random.randint(1,n)} ' for i in range(16)]) + "\\\\ \n"
+
+def players_table():
+    return r"""
+    \noindent\large
+    \begin{tabular}{ c | p{1.25in} | p{1.25in} | p{1.25in} | c c c p{1.9in} }
+        \cline{2-4}
+        & Role & Name & Notes & & \multicolumn{3}{l}{List of players in game:} \\
+        \cline{2-4}
+    """ + "".join([players_line(i+1) for i in range(players)]) + r"""
+    \end{tabular}
+    \vspace{0.25in}
+    """
+def actions_table():
+    return r"""
+    \noindent
+    \begin{tabular}{|p{0.9in}|p{0.9in}|p{0.9in}|p{0.9in}|p{0.9in}|p{0.9in}|p{0.9in}|}
+        \hline
+        Action & 1 & 2 & 3 & 4 & 5 & 6 \\
+        \hline
+    """ + "".join([actions_line() for i in range(actions)]) + r"""
+    \end{tabular}
+    \vspace{0.25in}
+    """
+
+def rng_table():
+    return r"""
+    \noindent
+    \begin{tabular}{ l *{16}{p{0.2in}} }
+        Sequence: """ + seq_line(players) + r"Draws: " + "".join([draw_line(players) for i in range(draw_lines)]) + r"""
+    \end{tabular}    
+    """
+
+def body():
+    return players_table() + actions_table() + rng_table() + "\\clearpage \n"
+
+
+preamble = r"""
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[top=0.5in, bottom=0.5in, left=0.5in, right=0.5in]{geometry}
+\pagestyle{empty}
+
+\begin{document}
+"""
+postamble = r"""
+\end{document}
+"""
+
+
 
 with open(f'{output_file}.tex', "w") as f:
-    for line in latex[0]:
-        f.write(line)
+    f.write(preamble)
     for i in range(sheets_to_generate):
-        draws_done = 0
-        for line in latex[1]:
-            if "Sequence:" in line:
-                f.write(seq_line())
-            elif "Draws:" in line:
-                f.write(draw_head + draw_line(np.random.randint(1,17,16)))
-                draws_done += 1
-            elif 0 < draws_done and draws_done < draw_n:
-                f.write(draw_line(np.random.randint(1,17,16)))
-                draws_done += 1
-            else:
-                f.write(line)
-        f.write("\\newpage \n")
-    for line in latex[2]:
-        f.write(line)
+        f.write(body())
+    f.write(postamble)
 
 subprocess.run([latex_exec, f'{output_file}.tex'])
 
