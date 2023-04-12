@@ -29,6 +29,9 @@ def seq_line(n):
 def draw_line(n):
     return "".join([f'& {random.randint(1,n)} ' for i in range(16)]) + "\\\\ \n"
 
+def header():
+    return r"""\section*{Mafia Moderator's Setup Sheet}"""
+
 def players_table():
     return r"""
     \noindent\large
@@ -61,7 +64,7 @@ def rng_table():
     """
 
 def body():
-    return players_table() + actions_table() + rng_table() + "\\clearpage \n"
+    return header() + players_table() + actions_table() + rng_table() + "\\clearpage \n"
 
 
 preamble = r"""
