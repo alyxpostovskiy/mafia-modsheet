@@ -11,7 +11,6 @@ players = 16
 actions = 8
 draw_lines = 4
 
-
 def players_line(i):
     return f'{i}' + r" & & & & & & " + f'{i}' + r""". & \\
     \cline{2-4} \cline{8-8}
